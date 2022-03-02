@@ -15,7 +15,7 @@ JOIN "products" ON "line_items"."product_id" = "products"."id";
 -- "warehouse"."product"."id"
 -- "products"."description" = 'cheetos'
 
-SELECT "products"."id", "products"."description"
+SELECT "products"."id", "products"."description", "warehouse"
 FROM "products"
 JOIN "warehouse_product" ON "warehouse_product"."product_id" = "products"."id"
 WHERE "products"."description" = 'cheetos';
@@ -23,13 +23,20 @@ WHERE "products"."description" = 'cheetos';
 
 
 4. Which warehouses have diet pepsi?
-SELECT "products"."id", "products"."description"
+SELECT "products"."id", "products"."description", "warehouse"
 FROM "products"
 JOIN "warehouse_product" ON "warehouse_product"."product_id" = "products"."id"
-WHERE "products"."description" = 'pepsi';
+JOIN "warehouse" ON "warehouse"."id" = "warehouse_product"."warehouse_id"
+WHERE "products"."description" = 'diet pepsi';
+
+
 
 5. Get the number of orders for each customer. NOTE: It is OK if those without orders are not included in results.
-
+SELECT "customers"."first_name", count("orders") 
+FROM "customers" 
+JOIN "addresses" ON "addresses"."customer_id" = "customers"."id"
+JOIN "orders" ON "orders"."address_id" = "addresses"."id"
+GROUP BY "customers"."first_name";
 
 6. How many customers do we have?
 
