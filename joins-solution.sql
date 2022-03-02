@@ -11,13 +11,14 @@ FROM "line_items"
 JOIN "orders" ON "orders"."id" = "line_items"."order_id"
 JOIN "products" ON "line_items"."product_id" = "products"."id";
 
+
 3. Which warehouses have cheetos?
 -- "warehouse"."product"."id"
 -- "products"."description" = 'cheetos'
-
-SELECT "products"."id", "products"."description", "warehouse"
+SELECT "products"."id", "products"."description", "warehouse"."warehouse"
 FROM "products"
 JOIN "warehouse_product" ON "warehouse_product"."product_id" = "products"."id"
+JOIN "warehouse" ON "warehouse"."id" = "warehouse_product"."warehouse_id"
 WHERE "products"."description" = 'cheetos';
 
 
@@ -38,11 +39,17 @@ JOIN "addresses" ON "addresses"."customer_id" = "customers"."id"
 JOIN "orders" ON "orders"."address_id" = "addresses"."id"
 GROUP BY "customers"."first_name";
 
+
+
 6. How many customers do we have?
 SELECT count(*) AS "Total Customers" FROM "customers" ;
 
+
+
 7. How many products do we carry?
 SELECT count(*) FROM "products";
+
+
 
 8. What is the total available on-hand quantity of diet pepsi?
 SELECT SUM("line_items"."quantity") AS "Total Diet Pepsi on Hand"
